@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:graph_ql/ui/continent_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graph_ql/bloc/cubits/product_cubit.dart';
+import 'package:graph_ql/ui/product_page.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+
+import 'injection.dart';
 
 Future<void> main() async {
   await initHiveForFlutter();
-
+  configureDependencies();
   final HttpLink httpLink = HttpLink(
     'https://demo.saleor.io/graphql/',
   );
   ValueNotifier<GraphQLClient> client = ValueNotifier(
-        GraphQLClient(link: httpLink, cache: GraphQLCache(store: HiveStore())
-  )
-    
-  );
+      GraphQLClient(link: httpLink, cache: GraphQLCache(store: HiveStore())));
 
-  var app =GraphQLProvider(client: client,child: const MyApp(),);
+  var app = GraphQLProvider(
+    client: client,
+    child: const MyApp(),
+  );
   runApp(app);
 }
 
@@ -27,11 +31,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
-      home: const ProductsPage(title: 'Products'),
+      home: BlocProvider(
+        create: (_) => getIt<ProductCubit>(),
+        child: const ProductsPage(title: 'Products'),
+      ),
     );
   }
 }
-
