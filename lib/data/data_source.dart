@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:graph_ql/data/products_response.dart';
+import 'package:graphql/client.dart';
+
 import 'package:injectable/injectable.dart';
+import 'package:http/http.dart' as http;
 
 @injectable
 class DataSource {
@@ -25,6 +30,7 @@ class DataSource {
           fetchResults: true,
         );
         final result = await client.query(options);
+
         return result.data;
       } catch (e) {
         debugPrint(e.toString());
@@ -35,4 +41,19 @@ class DataSource {
       throw UnimplementedError();
     }
   }
+
+
+  Future<String> fetchData({
+    required int first,
+    required String channel,
+  }) async {
+
+
+
+    final response =
+    await http.get(Uri.parse('https://countries.trevorblades.com/?query={countries{name}}'));
+
+    return response.body;
+  }
+
 }

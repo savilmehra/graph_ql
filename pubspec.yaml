@@ -5,6 +5,8 @@ description: A new Flutter project.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
+# export PATH=/Users/savil.kumar/Documents/flutter/bin:$PATH
+#export PATH=”$PATH:/Users/savil.kumar/Documents/flutter/bin”
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -37,9 +39,10 @@ dependencies:
   graphql_flutter: ^5.1.0
   flutter_bloc: ^8.0.0
   get_it: ^7.2.0
-  equatable: ^2.0.3
-  injectable: ^1.5.0
 
+  injectable: ^1.5.0
+  cached_network_image: ^3.2.1
+  http: ^0.13.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

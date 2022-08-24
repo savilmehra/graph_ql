@@ -1,5 +1,6 @@
 
-import 'package:graphql_flutter/graphql_flutter.dart';
+
+import 'package:graphql/client.dart';
 import 'package:injectable/injectable.dart';
 
 @module
@@ -9,8 +10,11 @@ abstract class InjectableModule {
 }
 
 GraphQLClient graphQLClient() {
+
   final HttpLink httpLink = HttpLink(
+
     'https://demo.saleor.io/graphql/',
+    useGETForQueries: true,
   );
 
   return GraphQLClient(
@@ -18,3 +22,5 @@ GraphQLClient graphQLClient() {
     link: httpLink,
   );
 }
+
+

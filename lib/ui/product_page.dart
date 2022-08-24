@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graph_ql/bloc/cubits/product_cubit.dart';
 import 'package:graph_ql/bloc/states/states.dart';
@@ -68,10 +69,14 @@ class _ProductsPageState extends State<ProductsPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.network(
-                      item.node!.thumbnail!.url ?? "",
+
+                    CachedNetworkImage(
+                      imageUrl: item.node!.thumbnail!.url ?? "",
+                      placeholder: (context, url) => const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                       fit: BoxFit.cover,
                     ),
+
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
