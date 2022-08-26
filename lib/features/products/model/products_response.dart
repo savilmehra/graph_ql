@@ -1,3 +1,5 @@
+import 'package:clean_framework/clean_framework_defaults.dart';
+
 class ProductsResponse {
   ProdustsData? data;
   Extensions? extensions;
@@ -23,7 +25,7 @@ class ProductsResponse {
   }
 }
 
-class ProdustsData {
+class ProdustsData extends JsonResponseModel  {
   Products? products;
 
   ProdustsData({this.products});
@@ -41,6 +43,10 @@ class ProdustsData {
     }
     return data;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [products];
 }
 
 class Products {
