@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:clean_framework/clean_framework.dart';
 
 import 'products_response.dart';
-import '../api/country_api_response.dart';
+
 
 class CountryEntity extends Entity {
-   final ProdustsData data;
+   final ProductResponse data;
 
 
-   CountryEntity({ProdustsData? d, List<EntityFailure> errors=const[]})
-       :   data = d??ProdustsData() // or here
+   CountryEntity({ProductResponse? d, List<EntityFailure> errors=const[]})
+       :   data = d??ProductResponse() // or here
    {
 
      print("constructor ----${jsonEncode(d)}");
@@ -23,7 +23,7 @@ class CountryEntity extends Entity {
   @override
   CountryEntity merge({
     List<EntityFailure>? errors,
-    ProdustsData? d,
+    ProductResponse? d,
   }) {
 
 

@@ -10,7 +10,7 @@ import 'product_quries.dart';
 
 
 class CountryService
-    extends GraphQlService<JsonRequestModel, ProdustsData> {
+    extends GraphQlService<JsonRequestModel, ProductResponse> {
 
   CountryService() : super( query: productGraphQL, variables: <String, dynamic>{
     'nfirst': 15,
@@ -19,8 +19,8 @@ class CountryService
   });
 
   @override
-  ProdustsData parseResponse(Map<String, dynamic> jsonResponse) {
+  ProductResponse parseResponse(Map<String, dynamic> jsonResponse) {
 
-    return ProdustsData.fromJson(jsonResponse);
+    return ProductResponse.fromJson(jsonResponse);
   }
 }
