@@ -1,5 +1,4 @@
 import 'package:clean_framework/clean_framework_defaults.dart';
-import 'package:clean_framework/src/bloc/service_adapter.dart';
 import 'package:clean_framework/src/model/entity.dart';
 
 import 'graph_ql_service_adapter.dart';

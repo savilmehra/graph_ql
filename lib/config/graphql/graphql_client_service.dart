@@ -2,10 +2,10 @@
 import 'package:graphql/client.dart';
 
 
-class GraphQLService {
+class GraphQLClientService {
   late  GraphQLClient _client;
 
-  GraphQLService() {
+  GraphQLClientService() {
     final HttpLink httpLink = HttpLink(
 
       'https://demo.saleor.io/graphql/',

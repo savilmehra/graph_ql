@@ -13,9 +13,6 @@ import '../model/country_entity.dart';
 @injectable
 class CountryServiceAdapter extends ServiceAdapterGraphQl<CountryEntity,
     JsonRequestModel, ProdustsData, CountryService> {
-
-
-
   CountryServiceAdapter() : super(CountryService());
 
   @override

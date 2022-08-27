@@ -24,4 +24,22 @@ class HomePresenter extends Presenter<CountryBloc, CountryVm, HomePage> {
 
     );
   }
+
+  @override
+  Widget buildLoadingScreen(BuildContext context) {
+
+    return  const Center(
+
+      child: CircularProgressIndicator(),
+    );
+  }
+
+
+  @override
+  Widget buildErrorScreen(BuildContext context, Object? error) {
+    return  const Center(
+
+      child: Text("Something went wrong"),
+    );
+  }
 }

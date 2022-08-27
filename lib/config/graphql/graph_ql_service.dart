@@ -13,13 +13,13 @@ abstract class GraphQlService<R extends JsonRequestModel,
   final String query;
   final Map<String, dynamic> variables;
 
-  late GraphQLService service;
+  late GraphQLClientService service;
 
   GraphQlService({
     required this.variables,
     required this.query,
   }) {
-    service = GraphQLService();
+    service = GraphQLClientService();
   }
 
   @override
@@ -40,19 +40,15 @@ abstract class GraphQlService<R extends JsonRequestModel,
     }
 
     final result = await service.performQuery(query, variables: variables);
-
-    log("request complete------------------$result");
     S model;
-
     try {
       final content =jsonEncode(result.data);
 
       final Map<String, dynamic> jsonResponse =
-          (content!.isEmpty) ? {} : json.decode(content) ?? <String, dynamic>{};
+          (content.isEmpty) ? {} : json.decode(content) ?? <String, dynamic>{};
       model = parseResponse(jsonResponse);
       return Right(model);
     } on Exception catch (e) {
-      print("request failed------------------$e");
       Locator()
           .logger
           .error('JsonService response parse exception', e.toString());
