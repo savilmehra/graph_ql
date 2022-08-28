@@ -11,12 +11,12 @@ import 'graphql_client_service.dart';
 abstract class GraphQlService<R extends JsonRequestModel,
     S extends JsonResponseModel> implements Service<R, S> {
   final String query;
-  final Map<String, dynamic> variables;
+
 
   late GraphQLClientService service;
 
   GraphQlService({
-    required this.variables,
+
     required this.query,
   }) {
     service = GraphQLClientService();
@@ -39,7 +39,7 @@ abstract class GraphQlService<R extends JsonRequestModel,
       }
     }
 
-    final result = await service.performQuery(query, variables: variables);
+    final result = await service.performQuery(query);
     S model;
     try {
       final content =jsonEncode(result.data);

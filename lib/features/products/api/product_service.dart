@@ -9,14 +9,10 @@ import '../../../config/graphql/graph_ql_service.dart';
 import 'product_quries.dart';
 
 
-class CountryService
+class ProductService
     extends GraphQlService<JsonRequestModel, ProductResponse> {
 
-  CountryService() : super( query: productGraphQL, variables: <String, dynamic>{
-    'nfirst': 15,
-    'nchannel': "default-channel",
-
-  });
+  ProductService() : super( query: searchQuery());
 
   @override
   ProductResponse parseResponse(Map<String, dynamic> jsonResponse) {

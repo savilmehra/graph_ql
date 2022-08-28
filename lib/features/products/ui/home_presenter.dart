@@ -3,21 +3,21 @@ import 'dart:async';
 import 'package:clean_framework/clean_framework.dart';
 
 import 'package:flutter/material.dart';
-import '../bloc/country_bloc.dart';
-import '../model/country_vm.dart';
+import '../bloc/product_bloc.dart';
+import '../model/product_vm.dart';
 import 'home_page.dart';
 
-class HomePresenter extends Presenter<CountryBloc, CountryVm, HomePage> {
+class HomePresenter extends Presenter<ProductBloc, ProductViewModel, HomePage> {
   @override
-  Stream<CountryVm> getViewModelStream(CountryBloc bloc) {
+  Stream<ProductViewModel> getViewModelStream(ProductBloc bloc) {
     return bloc.countryVmPipe.receive;
   }
 
   @override
   HomePage buildScreen(
     BuildContext context,
-    CountryBloc bloc,
-    CountryVm viewModel,
+    ProductBloc bloc,
+    ProductViewModel viewModel,
   ) {
     return HomePage(
       viewModel: viewModel,
@@ -28,9 +28,12 @@ class HomePresenter extends Presenter<CountryBloc, CountryVm, HomePage> {
   @override
   Widget buildLoadingScreen(BuildContext context) {
 
-    return  const Center(
+    return  const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
 
-      child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "183162683565",
+    "project_id": "graphql-241ab",
+    "storage_bucket": "graphql-241ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183162683565:android:fb7435c3ad9fda17dc8624",
+        "android_client_info": {
+          "package_name": "com.example.graph_ql"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183162683565-hni44mm94hgf910cne0n821u8o4c7enp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDncjk9UzDCVDRx_4Nd8R6dBIAWCnkAMOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183162683565-hni44mm94hgf910cne0n821u8o4c7enp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

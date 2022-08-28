@@ -40,6 +40,10 @@ dependencies:
   flutter_bloc: ^7.0.0
   get_it: ^7.2.0
   clean_framework: ^0.4.2
+  firebase_messaging: ^12.0.3
+  flutter_local_notifications: ^9.8.0+1
+  firebase_core: ^1.21.0
+  flutter_launcher_icons: ^0.10.0
 
   injectable: ^1.5.0
   cached_network_image: ^3.2.1
@@ -100,3 +104,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/notification.png"
+  min_sdk_android: 21

@@ -8,16 +8,16 @@ import 'package:injectable/injectable.dart';
 import '../../../config/graphql/graph_ql_service_adapter.dart';
 import '../model/products_response.dart';
 
-import '../api/country_service.dart';
-import '../model/country_entity.dart';
+import '../api/product_service.dart';
+import '../model/product_entity.dart';
 @injectable
-class CountryServiceAdapter extends ServiceAdapterGraphQl<CountryEntity,
-    JsonRequestModel, ProductResponse, CountryService> {
-  CountryServiceAdapter() : super(CountryService());
+class ProductAdapter extends ServiceAdapterGraphQl<ProductEntity,
+    JsonRequestModel, ProductResponse, ProductService> {
+  ProductAdapter() : super(ProductService());
 
   @override
-  CountryEntity createEntity(
-      CountryEntity initialEntity, ProductResponse responseModel) {
+  ProductEntity createEntity(
+      ProductEntity initialEntity, ProductResponse responseModel) {
     return initialEntity.merge(
       d: responseModel,
     );

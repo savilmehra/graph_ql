@@ -5,17 +5,24 @@ import 'package:clean_framework/clean_framework.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../model/country_vm.dart';
+import '../model/product_vm.dart';
 
 class HomePage extends Screen {
-  final CountryVm viewModel;
+  final ProductViewModel viewModel;
 
   HomePage({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: viewModel.data.products!.items == null || viewModel.data.products!.items!.isEmpty
+      backgroundColor: const Color(0xFFEEEEEE),
+
+      appBar: AppBar(
+
+        title: const Text("Products"),
+      ),
+        body: viewModel.data.products!.items == null ||
+                viewModel.data.products!.items!.isEmpty
             ? const Center(
                 child: Text("No data found!!"),
               )
