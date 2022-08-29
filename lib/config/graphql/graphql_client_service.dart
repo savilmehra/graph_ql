@@ -63,15 +63,4 @@ class GraphQLClientService {
 
 
 
-  Future<dynamic> get(String url,
-      {required Map<String, String> headers}) async {
-
-    final options = QueryOptions(
-      document: gql(url),
-      fetchPolicy: FetchPolicy.networkOnly,
-    );
-    QueryResult? result = await _client.query(options);
-    // log(jsonEncode(result.data));
-    return result;
-  }
 }

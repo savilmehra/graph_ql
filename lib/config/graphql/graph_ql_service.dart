@@ -54,17 +54,13 @@ abstract class GraphQlService<R extends JsonRequestModel,
 
     {
       case RequestType.query:
+      case RequestType.get:
         {
           final result = await service.performQuery(query);
            content =jsonEncode(result.data);
         }
         break;
-      case RequestType.get:
-        {
-          final result = await service.performQuery(query);
-          content =jsonEncode(result.data);
-        }
-        break;
+
       case RequestType.mutation:
         {
           final result = await service.performMutation(query);
