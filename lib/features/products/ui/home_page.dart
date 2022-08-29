@@ -5,6 +5,7 @@ import 'package:clean_framework/clean_framework.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../routes.dart';
 import '../model/product_vm.dart';
 
 class HomePage extends Screen {
@@ -15,12 +16,23 @@ class HomePage extends Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEEEEEE),
-
-      appBar: AppBar(
-
-        title: const Text("Products"),
-      ),
+        backgroundColor: const Color(0xFFEEEEEE),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () {
+                  context.router.push(Routes.get);
+                },
+                icon: Icon(Icons.accessibility_sharp))
+,
+            IconButton(
+                onPressed: () {
+                  context.router.push(Routes.cart);
+                },
+                icon: Icon(Icons.add_shopping_cart_outlined))
+          ],
+          title: const Text("Products"),
+        ),
         body: viewModel.data.products!.items == null ||
                 viewModel.data.products!.items!.isEmpty
             ? const Center(

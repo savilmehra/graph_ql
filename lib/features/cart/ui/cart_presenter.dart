@@ -3,23 +3,23 @@ import 'dart:async';
 import 'package:clean_framework/clean_framework.dart';
 
 import 'package:flutter/material.dart';
-import '../bloc/product_bloc.dart';
-import '../model/product_vm.dart';
-import 'home_page.dart';
+import '../bloc/cart_bloc.dart';
+import '../model/cart_vm.dart';
+import 'cart_page.dart';
 
-class HomePresenter extends Presenter<ProductBloc, ProductViewModel, HomePage> {
+class CartPresenter extends Presenter<CartBloc, CartViewModel, CartPage> {
   @override
-  Stream<ProductViewModel> getViewModelStream(ProductBloc bloc) {
+  Stream<CartViewModel> getViewModelStream(CartBloc bloc) {
     return bloc.countryVmPipe.receive;
   }
 
   @override
-  HomePage buildScreen(
+  CartPage buildScreen(
     BuildContext context,
-    ProductBloc bloc,
-    ProductViewModel viewModel,
+    CartBloc bloc,
+    CartViewModel viewModel,
   ) {
-    return HomePage(
+    return CartPage(
       viewModel: viewModel,
 
     );

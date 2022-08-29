@@ -7,20 +7,20 @@ import 'package:injectable/injectable.dart';
 
 import '../../../config/graphql/graph_ql_service.dart';
 import '../../../config/graphql/graph_ql_service_adapter.dart';
-import '../model/products_response.dart';
+import '../model/cart_response.dart';
 
-import '../api/product_service.dart';
-import '../model/product_entity.dart';
+import '../api/cart_service.dart';
+import '../model/cart_entity.dart';
 @injectable
-class ProductAdapter extends ServiceAdapterGraphQl<ProductEntity,
-    JsonRequestModel, ProductResponse, ProductService> {
+class CartAdapter extends ServiceAdapterGraphQl<CartEntity,
+    JsonRequestModel, CartResponse, CartService> {
 
   final RequestType requestType;
-  ProductAdapter(this.requestType) : super(ProductService(type: requestType));
+  CartAdapter(this.requestType) : super(CartService(type: requestType, cartId: '7hdnYowNelFXS0M8LTqegy0863PzQ12u'));
 
   @override
-  ProductEntity createEntity(
-      ProductEntity initialEntity, ProductResponse responseModel) {
+  CartEntity createEntity(
+      CartEntity initialEntity, CartResponse responseModel) {
     return initialEntity.merge(
       d: responseModel,
     );

@@ -1,9 +1,9 @@
-String searchQuery() {
+String searchQuery(String search) {
   return '''
 {
 	products(
 	filter:{}
-	search:"tv"
+	search:"$search"
 		pageSize: 10
 		currentPage: 1
 		sort: { relevance:DESC }
@@ -153,4 +153,29 @@ String searchQuery() {
 	}
 }
 ''';
+}
+
+
+String addItem()
+{
+return
+ ''' mutation {
+    addSimpleProductsToCart(
+        input: {
+          cart_id: "7hdnYowNelFXS0M8LTqegy0863PzQ12u"
+          cart_items: [
+            {
+              data: {
+                quantity: 1
+                sku: "TE0175809"
+              }
+            }
+          ]
+        }
+    ) {
+      cart {
+        total_quantity
+      }
+    }
+  }''';
 }

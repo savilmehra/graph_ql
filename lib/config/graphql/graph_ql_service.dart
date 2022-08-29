@@ -8,18 +8,27 @@ import 'package:injectable/injectable.dart';
 
 import 'graphql_client_service.dart';
 
+
+enum RequestType{
+  get,
+  query,
+  mutation
+
+}
 abstract class GraphQlService<R extends JsonRequestModel,
     S extends JsonResponseModel> implements Service<R, S> {
   final String query;
-
+  final RequestType requestType;
+  final String baseUrl;
 
   late GraphQLClientService service;
 
   GraphQlService({
-
     required this.query,
+    required this.baseUrl,
+    required this.requestType,
   }) {
-    service = GraphQLClientService();
+    service = GraphQLClientService(baseUrl: baseUrl);
   }
 
   @override
@@ -39,13 +48,34 @@ abstract class GraphQlService<R extends JsonRequestModel,
       }
     }
 
-    final result = await service.performQuery(query);
     S model;
-    try {
-      final content =jsonEncode(result.data);
+    String content="";
+    switch(requestType)
 
-      final Map<String, dynamic> jsonResponse =
-          (content.isEmpty) ? {} : json.decode(content) ?? <String, dynamic>{};
+    {
+      case RequestType.query:
+        {
+          final result = await service.performQuery(query);
+           content =jsonEncode(result.data);
+        }
+        break;
+      case RequestType.get:
+        {
+          final result = await service.get(query, headers: {});
+          content =jsonEncode(result['data']);
+        }
+        break;
+      case RequestType.mutation:
+        {
+          final result = await service.performMutation(query);
+          content =jsonEncode(result.data);
+        }
+
+    }
+
+    try {
+
+      final Map<String, dynamic> jsonResponse = (content.isEmpty) ? {} : json.decode(content) ?? <String, dynamic>{};
       model = parseResponse(jsonResponse);
       return Right(model);
     } on Exception catch (e) {

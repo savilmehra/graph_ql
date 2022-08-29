@@ -1,5 +1,6 @@
 
 import 'package:clean_framework/clean_framework.dart';
+import 'package:graph_ql/config/graphql/graph_ql_service.dart';
 
 
 import '../../../locator_gl.dart';
@@ -12,9 +13,14 @@ class ProductUseCase extends UseCase {
   late final ViewModelCallback<ProductViewModel> _viewModelCallBack;
   ProductUseCase(  this._viewModelCallBack);
   var scope;
-  void execute() async {
+  void executeGetRequest() async {
     scope = LocatorMain().repository.create<ProductEntity>(ProductEntity(), _notifySubscribers);
-    await LocatorMain().repository.runServiceAdapter(scope, ProductAdapter());
+    await LocatorMain().repository.runServiceAdapter(scope, ProductAdapter(RequestType.get));
+  }
+
+  void executeQuery() async {
+    scope = LocatorMain().repository.create<ProductEntity>(ProductEntity(), _notifySubscribers);
+    await LocatorMain().repository.runServiceAdapter(scope, ProductAdapter(RequestType.query));
   }
   void _notifySubscribers(entity) {
     entity= LocatorMain()
