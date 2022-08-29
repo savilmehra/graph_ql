@@ -12,9 +12,7 @@ class ProductService extends GraphQlService<JsonRequestModel, ProductResponse> {
   ProductService({required this.type})
       : super(
             baseUrl: '${DOMAIN_NAME}/graphql',
-            query: searchQuery(type == RequestType.get
-                ? "tv"
-                : type == RequestType.query
+            query:type == RequestType.get?products() :searchQuery( type == RequestType.query
                     ? "laptop"
                     : "pen"),
             requestType: type);

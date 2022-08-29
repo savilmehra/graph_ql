@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:graph_ql/config/graphql/graph_ql_service.dart';
 import 'package:graphql/client.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,22 +11,25 @@ const String MUTATION = "$DOMAIN_NAME/graphql";
 class GraphQLClientService {
   late GraphQLClient _client;
 
-  GraphQLClientService({required String baseUrl}) {
+  GraphQLClientService({required String baseUrl,required RequestType requestType}) {
     var link;
     final AuthLink authLink = AuthLink(
-      getToken: () async => 'Bearer krxrov9y2odsheczd6f35j0gnyfxhgsr',
+      getToken: () async => 'Bearer 4vuve1vw4gcf1b09u7gmzetz8vdkevua',
     );
     final HttpLink _httpLink = HttpLink(baseUrl,
+        useGETForQueries:requestType==RequestType.get?true:false,
         defaultHeaders: <String, String>{'Store': 'english'});
 
 
-    link = authLink.concat(_httpLink);
+    link =requestType==RequestType.get?_httpLink: authLink.concat(_httpLink);
 
     _client = GraphQLClient(
       cache: GraphQLCache(store: HiveStore()),
       link: link,
     );
   }
+
+
 
   Future<QueryResult> performQuery(
     String query, {
@@ -61,11 +65,13 @@ class GraphQLClientService {
 
   Future<dynamic> get(String url,
       {required Map<String, String> headers}) async {
-    url = url.replaceAll("\n", " ");
-    final response = await http.get(
-      Uri.parse(BASE_URL_GET + url),
-      headers: <String, String>{'Store': 'english'},
+
+    final options = QueryOptions(
+      document: gql(url),
+      fetchPolicy: FetchPolicy.networkOnly,
     );
-    return json.decode(utf8.decode(response.bodyBytes));
+    QueryResult? result = await _client.query(options);
+    // log(jsonEncode(result.data));
+    return result;
   }
 }

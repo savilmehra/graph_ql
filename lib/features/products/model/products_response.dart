@@ -1,6 +1,8 @@
 
 import 'package:clean_framework/clean_framework_defaults.dart';
 
+import '../../cart/model/cart_response.dart';
+
 
 
 
@@ -31,9 +33,93 @@ class ProductResponse extends   JsonResponseModel {
   // TODO: implement props
   List<Object?> get props => [sTypename,products];
 }
+class GridViewItems {
+  int? id;
+  String? sku;
+  String? name;
+  String? urlKey;
+  String? stockStatus;
+  String? sTypename;
+  ProductImage? image;
 
+  PriceRange? priceRange;
+  double? specialPrice;
+  String? specialToDate;
+  String? specialFromDate;
+  List<Null>? priceTiers;
+
+
+  GridViewItems(
+      {this.id,
+        this.sku,
+        this.name,
+        this.urlKey,
+        this.stockStatus,
+        this.sTypename,
+        this.image,
+
+        this.priceRange,
+
+        this.specialPrice,
+        this.specialToDate,
+        this.specialFromDate,
+        this.priceTiers});
+
+  GridViewItems.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    sku = json['sku'];
+    name = json['name'];
+    urlKey = json['url_key'];
+    stockStatus = json['stock_status'];
+    sTypename = json['__typename'];
+    image =
+    json['image'] != null ? new ProductImage.fromJson(json['image']) : null;
+
+    priceRange = json['price_range'] != null
+        ? new PriceRange.fromJson(json['price_range'])
+        : null;
+    specialPrice =
+    json['special_price'] != null ? json['special_price'].toDouble() : 0.0;
+    specialToDate = json['special_to_date'];
+    specialFromDate = json['special_from_date'];
+    if (json['price_tiers'] != null) {
+      priceTiers = <Null>[];
+      json['price_tiers'].forEach((v) {
+        // priceTiers.add(new Null.fromJson(v));
+      });
+    }
+
+
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['sku'] = this.sku;
+    data['name'] = this.name;
+    data['url_key'] = this.urlKey;
+    data['stock_status'] = this.stockStatus;
+    data['__typename'] = this.sTypename;
+    if (this.image != null) {
+      data['image'] = this.image?.toJson();
+    }
+
+    if (this.priceRange != null) {
+      data['price_range'] = this.priceRange?.toJson();
+    }
+    data['special_price'] = this.specialPrice;
+    data['special_to_date'] = this.specialToDate;
+    data['special_from_date'] = this.specialFromDate;
+    if (this.priceTiers != null) {
+      // data['price_tiers'] = this.priceTiers.map((v) => v.toJson()).toList();
+    }
+
+    return data;
+  }
+}
 class Products extends   JsonResponseModel{
   String? sTypename;
+  List<GridViewItems>? gridItem;
   List<Items>? items;
   int? totalCount;
   List<Aggregations>? aggregations;
@@ -42,11 +128,19 @@ class Products extends   JsonResponseModel{
   Products(
       {this.sTypename,
         this.items,
+        this.gridItem,
         this.totalCount,
         this.aggregations,
         this.pageInfo});
 
   Products.fromJson(Map<String, dynamic> json) {
+
+    if (json['items'] != null) {
+      gridItem = <GridViewItems>[];
+      json['items'].forEach((v) {
+        gridItem?.add(new GridViewItems.fromJson(v));
+      });
+    }
     sTypename = json['__typename'];
     if (json['items'] != null) {
       items = <Items>[];
@@ -97,10 +191,8 @@ class Items {
   Image? image;
   Image? smallImage;
   Image? thumbnail;
-  PriceRange? priceRange;
-  String? specialPrice;
-  String? specialToDate;
-  String? specialFromDate;
+
+
   List<String>? priceTiers;
 
   Items(
@@ -113,10 +205,8 @@ class Items {
         this.image,
         this.smallImage,
         this.thumbnail,
-        this.priceRange,
-        this.specialPrice,
-        this.specialToDate,
-        this.specialFromDate,
+
+
         this.priceTiers});
 
   Items.fromJson(Map<String, dynamic> json) {
@@ -133,12 +223,7 @@ class Items {
     thumbnail = json['thumbnail'] != null
         ? new Image.fromJson(json['thumbnail'])
         : null;
-    priceRange = json['price_range'] != null
-        ? new PriceRange.fromJson(json['price_range'])
-        : null;
-    specialPrice = json['special_price'];
-    specialToDate = json['special_to_date'];
-    specialFromDate = json['special_from_date'];
+
     if (json['price_tiers'] != null) {
       priceTiers = <String>[];
       json['price_tiers'].forEach((v) {
@@ -164,12 +249,7 @@ class Items {
     if (this.thumbnail != null) {
       data['thumbnail'] = this.thumbnail!.toJson();
     }
-    if (this.priceRange != null) {
-      data['price_range'] = this.priceRange!.toJson();
-    }
-    data['special_price'] = this.specialPrice;
-    data['special_to_date'] = this.specialToDate;
-    data['special_from_date'] = this.specialFromDate;
+
     if (this.priceTiers != null) {
       data['price_tiers'] = this.priceTiers!.map((v) => "v.toJson()").toList();
     }
@@ -294,8 +374,8 @@ class RegularPrice {
 
 class Discount {
   String? sTypename;
-  int? amountOff;
-  int? percentOff;
+  num? amountOff;
+  num? percentOff;
 
   Discount({this.sTypename, this.amountOff, this.percentOff});
 

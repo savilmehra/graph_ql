@@ -154,7 +154,12 @@ String searchQuery(String search) {
 }
 ''';
 }
-
+String products(
+  ) {
+  return '''
+  { products( filter: { category_id: { eq: "9466" }} pageSize: 5 currentPage: 1 sort: { position: null  } ) { items { id sku name url_key stock_status __typename image { url label position } price_range { minimum_price { final_price { value currency } } maximum_price { discount { amount_off percent_off } } } } total_count page_info { page_size } } }
+''';
+}
 
 String addItem()
 {

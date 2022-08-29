@@ -28,7 +28,7 @@ abstract class GraphQlService<R extends JsonRequestModel,
     required this.baseUrl,
     required this.requestType,
   }) {
-    service = GraphQLClientService(baseUrl: baseUrl);
+    service = GraphQLClientService(baseUrl: baseUrl,requestType:requestType);
   }
 
   @override
@@ -61,8 +61,8 @@ abstract class GraphQlService<R extends JsonRequestModel,
         break;
       case RequestType.get:
         {
-          final result = await service.get(query, headers: {});
-          content =jsonEncode(result['data']);
+          final result = await service.performQuery(query);
+          content =jsonEncode(result.data);
         }
         break;
       case RequestType.mutation:
