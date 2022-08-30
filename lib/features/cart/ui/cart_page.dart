@@ -28,7 +28,7 @@ class CartPage extends Screen {
           ],
           title: const Text("Cart Items"),
         ),
-        body: viewModel.data.cart!.items == null ||
+        body:  viewModel.data.cart==null || viewModel.data.cart!.items == null ||
                 viewModel.data.cart!.items!.isEmpty
             ? const Center(
                 child: Text("No data found!!"),

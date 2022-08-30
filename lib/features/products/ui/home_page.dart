@@ -33,7 +33,7 @@ class HomePage extends Screen {
           ],
           title: const Text("Products"),
         ),
-        body: viewModel.data.products!.items == null ||
+        body:viewModel.data.products==null|| viewModel.data.products!.items == null ||
                 viewModel.data.products!.items!.isEmpty
             ? const Center(
                 child: Text("No data found!!"),
