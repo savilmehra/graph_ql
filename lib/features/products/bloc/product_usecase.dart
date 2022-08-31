@@ -15,12 +15,12 @@ class ProductUseCase extends UseCase {
   var scope;
   void executeGetRequest() async {
     scope = LocatorMain().repository.create<ProductEntity>(ProductEntity(), _notifySubscribers);
-    await LocatorMain().repository.runServiceAdapter(scope, ProductAdapter(RequestType.get));
+    await LocatorMain().repository.runServiceAdapter(scope, ProductAdapter(RequestType.query,null,{'Store': 'english'}));
   }
 
   void executeQuery() async {
     scope = LocatorMain().repository.create<ProductEntity>(ProductEntity(), _notifySubscribers);
-    await LocatorMain().repository.runServiceAdapter(scope, ProductAdapter(RequestType.query));
+    await LocatorMain().repository.runServiceAdapter(scope, ProductAdapter(RequestType.query,"4vuve1vw4gcf1b09u7gmzetz8vdkevua",{'Store': 'english'}));
   }
   void _notifySubscribers(entity) {
     entity= LocatorMain()

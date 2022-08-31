@@ -11,12 +11,20 @@ import '../model/cart_response.dart';
 
 import '../api/cart_service.dart';
 import '../model/cart_entity.dart';
-@injectable
-class CartAdapter extends ServiceAdapterGraphQl<CartEntity,
-    JsonRequestModel, CartResponse, CartService> {
 
+@injectable
+class CartAdapter
+    extends ServiceAdapterGraphQl<CartEntity, CartResponse, CartService> {
+  final String? token;
   final RequestType requestType;
-  CartAdapter(this.requestType) : super(CartService(type: requestType, cartId: '7hdnYowNelFXS0M8LTqegy0863PzQ12u'));
+  final Map<String, String>? header;
+
+  CartAdapter(this.requestType, this.token, this.header)
+      : super(CartService(
+            token: token,
+            header: header,
+            type: requestType,
+            cartId: '7hdnYowNelFXS0M8LTqegy0863PzQ12u'));
 
   @override
   CartEntity createEntity(

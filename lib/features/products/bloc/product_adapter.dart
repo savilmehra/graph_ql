@@ -13,10 +13,11 @@ import '../api/product_service.dart';
 import '../model/product_entity.dart';
 @injectable
 class ProductAdapter extends ServiceAdapterGraphQl<ProductEntity,
-    JsonRequestModel, ProductResponse, ProductService> {
-
+   ProductResponse, ProductService> {
+  final Map<String, String>? header;
+  final String? token;
   final RequestType requestType;
-  ProductAdapter(this.requestType) : super(ProductService(type: requestType));
+  ProductAdapter(this.requestType,this.token,this.header) : super(ProductService(type: requestType,token: token,header: header));
 
   @override
   ProductEntity createEntity(

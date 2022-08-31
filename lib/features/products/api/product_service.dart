@@ -6,15 +6,16 @@ import '../../../config/graphql/graph_ql_service.dart';
 import '../../../config/graphql/graphql_client_service.dart';
 import 'product_quries.dart';
 
-class ProductService extends GraphQlService<JsonRequestModel, ProductResponse> {
+class ProductService extends GraphQlService< ProductResponse> {
   final RequestType type;
-
-  ProductService({required this.type})
+  final Map<String, String>? header;
+  final String? token;
+  ProductService({required this.type,this.header,this.token})
       : super(
             baseUrl: '${DOMAIN_NAME}/graphql',
-            query:type == RequestType.get?products() :searchQuery( type == RequestType.query
-                    ? "laptop"
-                    : "pen"),
+            header: header,
+            token: token,
+            query:token == null?products() :searchQuery( "pen"),
             requestType: type);
 
   @override

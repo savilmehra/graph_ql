@@ -3,75 +3,59 @@ import 'dart:developer';
 import 'package:clean_framework/clean_framework.dart';
 import 'package:clean_framework/clean_framework_defaults.dart';
 
-
 import 'package:injectable/injectable.dart';
 
 import 'graphql_client_service.dart';
 
+enum RequestType { query, mutation }
 
-enum RequestType{
-  get,
-  query,
-  mutation
-
-}
-abstract class GraphQlService<R extends JsonRequestModel,
-    S extends JsonResponseModel> implements Service<R, S> {
+abstract class GraphQlService<S extends JsonResponseModel>
+    implements ServiceGQL {
   final String query;
   final RequestType requestType;
   final String baseUrl;
-
+  final String? token;
+  final Map<String, String>? header;
   late GraphQLClientService service;
 
   GraphQlService({
     required this.query,
     required this.baseUrl,
+    this.token,
+    this.header,
     required this.requestType,
   }) {
-    service = GraphQLClientService(baseUrl: baseUrl,requestType:requestType);
+    service = GraphQLClientService(baseUrl: baseUrl, token: token);
   }
 
   @override
-  Future<Either<ServiceFailure, S>> request({R? requestModel}) async {
+  Future<Either<ServiceFailure, S>> request() async {
     if (await Locator().connectivity.getConnectivityStatus() ==
         ConnectivityStatus.offline) {
       Locator().logger.debug('JsonService response no connectivity error');
       return Left(NoConnectivityServiceFailure());
     }
 
-    Map<String, dynamic> requestJson = const {};
-    if (requestModel != null) {
-      requestJson = requestModel.toJson();
-      if (!isRequestModelJsonValid(requestJson)) {
-        Locator().logger.debug('JsonService response invalid request error');
-        return Left(GeneralServiceFailure());
-      }
-    }
-
     S model;
-    String content="";
-    switch(requestType)
-
-    {
+    String content = "";
+    switch (requestType) {
       case RequestType.query:
-      case RequestType.get:
         {
           final result = await service.performQuery(query);
-           content =jsonEncode(result.data);
+          content = jsonEncode(result.data);
         }
         break;
 
       case RequestType.mutation:
         {
           final result = await service.performMutation(query);
-          content =jsonEncode(result.data);
+          content = jsonEncode(result.data);
         }
-
     }
 
     try {
-
-      final Map<String, dynamic> jsonResponse = (content.isEmpty) ? {} : json.decode(content) ?? <String, dynamic>{};
+      final Map<String, dynamic> jsonResponse =
+          (content.isEmpty) ? {} : json.decode(content) ?? <String, dynamic>{};
       model = parseResponse(jsonResponse);
       return Right(model);
     } on Exception catch (e) {
@@ -109,4 +93,8 @@ abstract class GraphQlService<R extends JsonRequestModel,
       RestResponseType responseType, Map<String, dynamic> jsonResponse) {
     return GeneralServiceFailure();
   }
+}
+
+abstract class ServiceGQL {
+  Future<void> request();
 }

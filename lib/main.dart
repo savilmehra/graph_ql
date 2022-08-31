@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:graph_ql/routes.dart';
 
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'config/fcm_service.dart';
+import 'config/prefrences.dart';
 Future<void> main() async {
   await initHiveForFlutter();
-
+  await SharedPrefs.init();
 
 
 
@@ -28,10 +30,15 @@ class MyAPpState extends State<MyApp> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       initializeFcmService();
     });
+
     super.initState();
   }
 
   Future<void> initializeFcmService() async {
+
+    if(!SharedPrefs.instance.containsKey("cache")) {
+      SharedPrefs.instance.setString("cache", "Memory");
+    }
     fcmService = FcmService(context);
     await fcmService.initializeFCM();
     fcmService.getFCM();

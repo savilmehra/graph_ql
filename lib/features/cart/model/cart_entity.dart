@@ -13,7 +13,7 @@ class CartEntity extends Entity {
        :   data = d??CartResponse() // or here
    {
 
-     print("constructor ----${jsonEncode(d)}");
+
    }
 
 

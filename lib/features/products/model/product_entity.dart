@@ -13,7 +13,7 @@ class ProductEntity extends Entity {
        :   data = d??ProductResponse() // or here
    {
 
-     print("constructor ----${jsonEncode(d)}");
+
    }
 
 

@@ -6,15 +6,15 @@ import 'graph_ql_service.dart';
 
 
 
-abstract class ServiceAdapterGraphQl<E extends Entity, R extends JsonRequestModel,
-M extends JsonResponseModel, S extends GraphQlService<R, M>> {
+abstract class ServiceAdapterGraphQl<E extends Entity,
+M extends JsonResponseModel, S extends GraphQlService< M>> {
   final S _service;
 
   ServiceAdapterGraphQl(S service) : _service = service;
 
   Future<Entity> query(E initialEntity) async {
     final eitherResponse =
-    await _service.request(requestModel: createRequest(initialEntity));
+    await _service.request();
     return eitherResponse
         .fold((error) => createEntityWithError(initialEntity, error),
             (responseModel) {
@@ -31,6 +31,5 @@ M extends JsonResponseModel, S extends GraphQlService<R, M>> {
     return initialEntity.merge(errors: [GeneralEntityFailure()]) as E;
   }
 
-  // Override if needed.
-  R? createRequest(E entity) => null;
+
 }
